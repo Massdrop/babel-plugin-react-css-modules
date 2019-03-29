@@ -48,6 +48,9 @@
     "removeImport": {
       "type": "boolean"
     },
+    "replaceImport": {
+      "type": "boolean"
+    },
     "webpackHotModuleReloading": {
       "type": "boolean"
     },

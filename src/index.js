@@ -160,11 +160,13 @@ export default ({
         const targetResourcePath = getTargetResourcePath(path, stats);
 
         let styleImportName: string;
+        let hasLocalName = false;
 
         if (path.node.specifiers.length === 0) {
           // use imported file path as import name
           styleImportName = path.node.source.value;
         } else if (path.node.specifiers.length === 1) {
+          hasLocalName = true;
           styleImportName = path.node.specifiers[0].local.name;
         } else {
           // eslint-disable-next-line no-console
@@ -183,8 +185,20 @@ export default ({
           addWebpackHotModuleAccept(path);
         }
 
-        if (stats.opts.removeImport) {
+        if (stats.opts.removeImport || (stats.opts.replaceImport && !hasLocalName)) {
           path.remove();
+        } else if (stats.opts.replaceImport) {
+          path.replaceWith(
+            t.variableDeclaration('var', [
+              t.variableDeclarator(
+                t.identifier(styleImportName),
+                createObjectExpression(
+                  t,
+                  filenameMap[filename].styleModuleImportMap[styleImportName]
+                )
+              )
+            ])
+          );
         }
       },
       JSXElement (path: *, stats: *): void {
