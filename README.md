@@ -195,6 +195,7 @@ Configure the options for the plugin within your `.babelrc` as follows:
 |`filetypes`|`?FiletypesConfigurationType`|Configure [postcss syntax loaders](https://github.com/postcss/postcss#syntaxes) like sugarss, LESS and SCSS and extra plugins for them. ||
 |`generateScopedName`|`?GenerateScopedNameConfigurationType`|Refer to [Generating scoped names](https://github.com/css-modules/postcss-modules#generating-scoped-names). If you use this option, make sure it matches the value of `localIdentName` in webpack config. See this [issue](https://github.com/gajus/babel-plugin-react-css-modules/issues/108#issuecomment-334351241) |`[path]___[name]__[local]___[hash:base64:5]`|
 |`removeImport`|`boolean`|Remove the matching style import. This option is used to enable server-side rendering.|`false`|
+|`replaceImport`|`boolean`|Replace the matching style import with the compiled scss object. This option is used to enable server-side rendering.|`false`|
 |`webpackHotModuleReloading`|`boolean`|Enables hot reloading of CSS in webpack|`false`|
 |`handleMissingStyleName`|`"throw"`, `"warn"`, `"ignore"`|Determines what should be done for undefined CSS modules (using a `styleName` for which there is no CSS module defined).  Setting this option to `"ignore"` is equivalent to setting `errorWhenNotFound: false` in [react-css-modules](https://github.com/gajus/react-css-modules#errorwhennotfound). |`"throw"`|
 |`attributeNames`|`?AttributeNameMapType`|Refer to [Custom Attribute Mapping](#custom-attribute-mapping)|`{"styleName": "className"}`|
@@ -260,9 +261,9 @@ To add support for different CSS syntaxes (e.g. SCSS), perform the following two
     }
   }
   ```
-  
+
   Postcss plugins can have options specified by wrapping the name and an options object in an array inside your config
-  
+
   ```json
     "plugins": [
       ["postcss-import-sync2", {
@@ -270,9 +271,9 @@ To add support for different CSS syntaxes (e.g. SCSS), perform the following two
       }],
       "postcss-nested"
     ]
-  ```  
-   
-  
+  ```
+
+
 ### Custom Attribute Mapping
 
 You can set your own attribute mapping rules using the `attributeNames` option.

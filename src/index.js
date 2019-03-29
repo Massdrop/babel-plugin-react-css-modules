@@ -185,6 +185,18 @@ export default ({
 
         if (stats.opts.removeImport) {
           path.remove();
+        } else if (stats.opts.replaceImport) {
+          path.replaceWith(
+            t.variableDeclaration('var', [
+              t.variableDeclarator(
+                t.identifier(styleImportName),
+                createObjectExpression(
+                  t,
+                  filenameMap[filename].styleModuleImportMap[styleImportName]
+                )
+              )
+            ])
+          );
         }
       },
       JSXElement (path: *, stats: *): void {
