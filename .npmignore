@@ -3,3 +3,6 @@ test
 coverage
 .*
 *.log
+benchmark/
+demo/
+ISSUE_TEMPLATE.md
